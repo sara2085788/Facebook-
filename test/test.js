@@ -58,7 +58,7 @@ describe('auto-check element', function() {
         input.value = 'hub'
         input.dispatchEvent(new InputEvent('change'))
         input.addEventListener('autocheck:success', event => {
-          resolve(event.detail.warning)
+          resolve(event.detail.message)
         })
       }).then(result => {
         assert.equal('This is a warning', result)

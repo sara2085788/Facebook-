@@ -85,10 +85,10 @@ export default class AutoCheckElement extends HTMLElement {
       .then(data => {
         this.dispatchEvent(new CustomEvent('load'))
 
-        const warning = data ? data.trim() : null
+        const message = data.message ? data.message.trim() : null
         this.input.dispatchEvent(
           new CustomEvent('autocheck:success', {
-            detail: {warning},
+            detail: {message, warning: data.warning},
             bubbles: true,
             cancelable: true
           })
@@ -136,7 +136,7 @@ function send(xhr, body) {
   return new Promise((resolve, reject) => {
     xhr.onload = function() {
       if (xhr.status >= 200 && xhr.status < 300) {
-        resolve(xhr.responseText)
+        resolve({message: xhr.responseText, warning: xhr.status === 201})
       } else {
         reject(new XHRError(xhr.status, xhr.responseText, xhr.getResponseHeader('Content-Type')))
       }
