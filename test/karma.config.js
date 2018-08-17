@@ -6,6 +6,10 @@ function checker(request, response, next) {
     return
   } else if (request.method === 'POST' && request.url.startsWith('/success')) {
     response.writeHead(200)
+    response.end('This is a success')
+    return
+  } else if (request.method === 'POST' && request.url.startsWith('/warning')) {
+    response.writeHead(201)
     response.end('This is a warning')
     return
   }

@@ -52,7 +52,7 @@ describe('auto-check element', function() {
       })
     })
 
-    it('emits a success event with warning when server returns a non error response', function() {
+    it('emits a success event with a success message when server returns a success response', function() {
       return new Promise(resolve => {
         const input = document.querySelector('input')
         input.value = 'hub'
@@ -61,7 +61,7 @@ describe('auto-check element', function() {
           resolve(event.detail.message)
         })
       }).then(result => {
-        assert.equal('This is a warning', result)
+        assert.equal('This is a success', result)
       })
     })
 
