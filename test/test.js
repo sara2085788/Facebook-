@@ -58,10 +58,26 @@ describe('auto-check element', function() {
         input.value = 'hub'
         input.dispatchEvent(new InputEvent('change'))
         input.addEventListener('autocheck:success', event => {
-          resolve(event.detail.message)
+          resolve(event.detail)
         })
       }).then(result => {
-        assert.equal('This is a success', result)
+        assert.isFalse(result.warning)
+        assert.equal('This is a success', result.message)
+      })
+    })
+
+    it('emits a success event with a warning message when server returns a reponse with status 201', function() {
+      return new Promise(resolve => {
+        document.querySelector('auto-check').src = '/warning'
+        const input = document.querySelector('input')
+        input.value = 'hub'
+        input.dispatchEvent(new InputEvent('change'))
+        input.addEventListener('autocheck:success', event => {
+          resolve(event.detail)
+        })
+      }).then(result => {
+        assert.isTrue(result.warning)
+        assert.equal('This is a warning', result.message)
       })
     })
 
