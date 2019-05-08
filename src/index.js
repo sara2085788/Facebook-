@@ -1,4 +1,4 @@
-/* @flow */
+/* @flow strict */
 
 import debounce from './debounce'
 import XHRError from './xhr-error'
