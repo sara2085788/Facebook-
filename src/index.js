@@ -155,6 +155,7 @@ function performCheck(input: HTMLInputElement, body: FormData, url: string): Pro
   requests.set(input, xhr)
 
   xhr.open('POST', url, true)
+  xhr.setRequestHeader('Accept', 'application/json, text/plain;q=0.9')
   const result = send(xhr, body)
   result.then(clear, clear)
   return result
