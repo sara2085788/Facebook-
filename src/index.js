@@ -111,6 +111,19 @@ function setLoadingState(event: Event) {
     return
   }
 
+  const body = new FormData()
+  body.append('authenticity_token', csrf)
+  body.append('value', input.value)
+
+  const id = body.entries ? [...body.entries()].sort().toString() : null
+  if (id && id === state.previousValue) {
+    if (autoCheckElement.required) {
+      input.setCustomValidity('')
+    }
+    return
+  }
+  state.previousValue = id
+
   let message = 'Verifying…'
   const setValidity = text => (message = text)
   input.dispatchEvent(
@@ -168,10 +181,6 @@ async function check(autoCheckElement: AutoCheckElement) {
   const body = new FormData()
   body.append('authenticity_token', csrf)
   body.append('value', input.value)
-
-  const id = body.entries ? [...body.entries()].sort().toString() : null
-  if (id && id === state.previousValue) return
-  state.previousValue = id
 
   if (!input.value.trim()) {
     if (autoCheckElement.required) {
