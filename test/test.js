@@ -269,6 +269,14 @@ describe('auto-check element', function() {
       const autoCheck = document.querySelector('auto-check')
       assert.equal(autoCheck.csrf, 'foo')
     })
+
+    it('do not emit if essential attributes are missing', async function() {
+      const events = []
+      checker.removeAttribute('src')
+      input.addEventListener('auto-check-start', event => events.push(event.type))
+      triggerChange(input, 'hub')
+      assert.deepEqual(events, [])
+    })
   })
 })
 
